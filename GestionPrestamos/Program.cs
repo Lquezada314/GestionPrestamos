@@ -1,6 +1,7 @@
 using GestionPrestamos.Components;
 using GestionPrestamos.DAL;
 using Microsoft.EntityFrameworkCore;
+using GestionPrestamos.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddRazorComponents()
 var ConStr = builder.Configuration.GetConnectionString("SQLiteConnection");
 
 builder.Services.AddDbContextFactory<Contexto>(o => o.UseSqlite(ConStr));
+
+//Inyeccion del PrestamosServicies
+builder.Services.AddScoped<PrestamosService>();
 
 var app = builder.Build();
 
