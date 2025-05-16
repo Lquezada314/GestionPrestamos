@@ -9,5 +9,9 @@ namespace GestionPrestamos.Models
 
         [Required(ErrorMessage = "Campo requerido")]
         public string Concepto { get; set; } = null!;
+
+        public int Monto { get; set; }
+
+        public int Balance { get; set; }
     }
 }

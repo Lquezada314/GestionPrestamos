@@ -46,6 +46,19 @@ namespace GestionPrestamos.Services
                 .ExecuteDeleteAsync() > 0;
         }
 
+        public async Task<bool> Guardar(Prestamos prestamo)
+        {
+            prestamo.Balance = prestamo.Monto;
+            if (!await Existe(prestamo.PrestamoId))
+            {
+                return await Insertar(prestamo);
+            }
+            else
+            {
+                return await Modificar(prestamo);
+            }
+        }
+
         //public async Task<List<Prestamos>> Listar(Expression<Func<Prestamos, bool>> criterio)
         //{
         //    await using var contexto = await DbFactory.CreateDbContextAsync();
