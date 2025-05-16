@@ -1,5 +1,5 @@
-﻿using GestionPrestamos.Models;
-using GestionPrestamos.Components;
+﻿using GestionPrestamos.Components;
+using GestionPrestamos.Models;
 using GestionPrestamos.DAL;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -19,7 +19,7 @@ namespace GestionPrestamos.Services
         {
             await using var contexto = await DbFactory.CreateDbContextAsync();
             return await contexto.Prestamos
-                .AnyAsync(p => p.PrestamosId == prestamoId);
+                .AnyAsync(p => p.PrestamoId == prestamoId);
         }
 
         private async Task<bool> Modificar(Prestamos prestamo)
@@ -34,7 +34,25 @@ namespace GestionPrestamos.Services
         {
             await using var contexto = await DbFactory.CreateDbContextAsync();
             return await contexto.Prestamos
-                .FirstOrDefaultAsync(p => p.PrestamosId == prestamoId);
+                .FirstOrDefaultAsync(p => p.PrestamoId == prestamoId);
         }
+
+        public async Task<bool> Eliminar(int prestamoId)
+        {
+            await using var contexto = await DbFactory.CreateDbContextAsync();
+            return await contexto.Prestamos
+                .AsNoTracking()
+                .Where(p => p.PrestamoId == prestamoId)
+                .ExecuteDeleteAsync() > 0;
+        }
+
+        //public async Task<List<Prestamos>> Listar(Expression<Func<Prestamos, bool>> criterio)
+        //{
+        //    await using var contexto = await DbFactory.CreateDbContextAsync();
+        //    return await contexto.Prestamos
+        //        .Where(criterio)
+        //        .AsNoTracking()
+        //        .ToListAsync;
+        //}
     }
 }
