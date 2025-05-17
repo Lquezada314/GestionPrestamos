@@ -59,13 +59,13 @@ namespace GestionPrestamos.Services
             }
         }
 
-        //public async Task<List<Prestamos>> Listar(Expression<Func<Prestamos, bool>> criterio)
-        //{
-        //    await using var contexto = await DbFactory.CreateDbContextAsync();
-        //    return await contexto.Prestamos
-        //        .Where(criterio)
-        //        .AsNoTracking()
-        //        .ToListAsync;
-        //}
+        public async Task<List<Prestamos>> Listar(Expression<Func<Prestamos, bool>> criterio)
+        {
+            await using var contexto = await DbFactory.CreateDbContextAsync();
+            return await contexto.Prestamos
+                .Where(criterio)
+                .AsNoTracking()
+                .ToListAsync();
+        }
     }
 }
