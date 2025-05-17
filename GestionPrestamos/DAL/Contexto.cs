@@ -7,4 +7,6 @@ public class Contexto : DbContext
 {
     public Contexto(DbContextOptions<Contexto> options) : base(options) { }
     public DbSet<Prestamos> Prestamos { get; set; }
+
+    public DbSet<Deudores> Deudores { get; set; }
 }
