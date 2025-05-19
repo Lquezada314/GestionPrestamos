@@ -2,6 +2,7 @@
 using GestionPrestamos.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionPrestamos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20250517164100_Inicial3")]
+    partial class Inicial3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
@@ -44,12 +47,31 @@ namespace GestionPrestamos.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("DeudorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DeudoresDeudorId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Monto")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("PrestamoId");
 
+                    b.HasIndex("DeudoresDeudorId");
+
                     b.ToTable("Prestamos");
+                });
+
+            modelBuilder.Entity("GestionPrestamos.Models.Prestamos", b =>
+                {
+                    b.HasOne("GestionPrestamos.Models.Deudores", "Deudores")
+                        .WithMany()
+                        .HasForeignKey("DeudoresDeudorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deudores");
                 });
 #pragma warning restore 612, 618
         }

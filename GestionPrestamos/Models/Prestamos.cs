@@ -11,13 +11,13 @@ namespace GestionPrestamos.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Concepto { get; set; } = null!;
 
-        public int Monto { get; set; }
+        public int Monto { get; set; } = 0;
 
-        public int Balance { get; set; }
+        public int Balance { get; set; } = 0;
 
-        [ForeignKey("DeudorId")]
-        public int DeudorId { get; set; }
+        //[ForeignKey("DeudorId")]
+        //public int DeudorId { get; set; }
 
-        public virtual Deudores Deudores { get; set; } = null!;
+        //public virtual Deudores Deudores { get; set; } = null!;
     }
 }

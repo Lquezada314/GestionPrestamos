@@ -6,23 +6,93 @@
 <PageTitle>Registro de  Pretamos</PageTitle>
 <div class="container">
 	<div class="card shadow-lg">
-		<div class="card-header space-between">
+
+		<div class="card-header justify-content-between align-items-center d-flex">
 			<h5 class="card-title">Registro de Prestamos</h5>
 			<a href="/Prestamo/Create" class="btn btn-primary"><span class="bi bi-plus-square mt-3"></span>Crear</a>
 		</div>
-		<div class="card-body">
-			<div class="row">
 
+		<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-3">
+					<label><strong>Filtrar por</strong></label>
+					<select class="form-select">
+						<option value="" hidden></option>
+						<option>Nombre Deudor</option>
+						<option>Concepto</option>
+						<option>Id Prestamo</option>
+					</select>
+				</div>
+				<div class="col-6 offset-3">
+					<label><strong>B&uacute;squeda</strong></label>
+				   <div class="input-group">
+						<input class="form-control" />
+						<button class="btn btn-outline-primary" @onclick="(()=>Buscar())">Q</button>
+					</div>
+				</div>
 			</div>
 
-			<div class="row align-items-center">
+			<div class="table table-bordered">
 
 			</div>
 		</div>
-		<div class="card-footer"></div>
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>PrestamoId</th>
+					<th>Concepto</th>
+					<th>Monto</th>
+					<th>Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var p in ListaPrestamos)
+				{
+					<tr>
+						<td>@p.PrestamoId</td>
+						<td>@p.Concepto</td>
+						<td>@p.Monto</td>
+						<td>
+							<button class="btn btn-outline-primary">*</button>
+							<button class="btn btn-outline-danger">-</button>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 	</div>
 </div>
 
 @code {
 
+	public List<Prestamos> ListaPrestamos { get; set; } = new List<Prestamos>();
+
+	public string Filtro { get; set; } = string.Empty;
+	public string ValorFiltro { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		ListaPrestamos = await prestamosService.Listar(criterio: p => p.PrestamoId > 0);
+	}
+
+	private async Task Buscar()
+	{
+		if (ValorFiltro.Trim() != "")
+		{
+
+			if (Filtro == "Deudor")
+			{
+				//ListaPrestamos = await prestamosService.Listar(criterio: p => p.Deudores.Nombres.ToLower().Contains(ValorFiltro.ToLower()));
+			}
+			else if (Filtro == "Concepto")
+			{
+				ListaPrestamos = await prestamosService.Listar(criterio: p => p.Concepto.ToLower().Contains(ValorFiltro.ToLower()));
+			}
+		}
+		else
+			ListaPrestamos = await prestamosService.Listar(criterio: p => p.PrestamoId > 0);
+	}
+
 }
+
