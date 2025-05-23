@@ -53,7 +53,7 @@ namespace GestionPrestamos.Services
             }
         }
 
-        public async Task<List<Tecnicos>> GetList(Expression<Func<Tecnicos, bool>> criterio)
+        public async Task<List<Tecnicos>> Listar(Expression<Func<Tecnicos, bool>> criterio)
         {
             await using var contexto = await DbFactory.CreateDbContextAsync();
             return await contexto.Tecnicos
