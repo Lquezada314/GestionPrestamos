@@ -9,4 +9,6 @@ public class Contexto : DbContext
     public DbSet<Prestamos> Prestamos { get; set; }
 
     public DbSet<Deudores> Deudores { get; set; }
+
+    public DbSet<Tecnicos> Tecnicos { get; set; }
 }
