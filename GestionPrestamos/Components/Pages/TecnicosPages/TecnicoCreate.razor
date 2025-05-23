@@ -1,0 +1,55 @@
+﻿@page "/Tecnico/Create"
+@inject TecnicosService tecnicosService
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<PageTitle>CreateTecnico</PageTitle>
+
+<EditForm Model="Tecnico" OnValidSubmit="Guardar">
+	<DataAnnotationsValidator />
+	<div class="container">
+		<div class="card shadow-lg">
+			<div class="card-header text-center">
+				<h5 class="text-title">Crear Pr&eacutestamo</h5>
+			</div>
+			<div class="card-body">
+				<div class="mb-3">
+					<label class="form-label"><strong>Id T&eacutenico</strong></label>
+					<InputNumber class="form-control" @bind-Value="Tecnico.TecnicoId" readonly></InputNumber>
+				</div>
+				<div class="mb-3">
+					<label class="form-label"><strong>Nombres</strong></label>
+					<InputText class="form-control" @bind-Value="Tecnico.NombresTecnico"></InputText>
+					<ValidationMessage For="(() => Tecnico.NombresTecnico)" />
+				</div>
+				<div class="mb-3">
+					<label class="form-label"><strong>Sueldo por hora</strong></label>
+					<InputNumber class="form-control" @bind-Value="Tecnico.SueldoxHora"></InputNumber>
+					<ValidationMessage For="(() => Tecnico.SueldoxHora)" />
+				</div>
+			</div>
+			<div class="card-footer text-center mt-2">
+				<a href="/Prestamo/Index" class="btn btn-secondary"><span class="bi bi-arrow-bar-left"></span>Volver</a>
+				<button type="submit" class="btn btn-primary bi bi-floppy ms-2">Guardar</button>
+			</div>
+		</div>
+	</div>
+</EditForm>
+
+@code {
+	public Tecnicos Tecnico { get; set; } = new Tecnicos();
+	public string Mensaje { get; set; } = string.Empty;
+
+	public async Task Guardar ()
+	{
+		var creado = await tecnicosService.Guardar(Tecnico);
+		if (creado)
+		{
+			navigationManager.NavigateTo(uri: "/Tecnicos/Index");
+		}
+		else
+		{
+			Mensaje = "Error al guardar el tecnico";
+		}
+	}
+}
