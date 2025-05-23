@@ -6,61 +6,61 @@
 <PageTitle>Registro de  Pretamos</PageTitle>
 <div class="container">
 	<div class="card shadow-lg">
-
 		<div class="card-header justify-content-between align-items-center d-flex">
-			<h5 class="card-title">Registro de Prestamos</h5>
-			<a href="/Prestamo/Create" class="btn btn-primary"><span class="bi bi-plus-square mt-3"></span>Crear</a>
+			<h5 class="card-title mt-2">Registro de Pr&eacutestamos</h5>
+			<a href="/Prestamo/Create" class="btn btn-primary"><span class="bi bi-plus-square mt-3"></span>[+] Crear</a>
 		</div>
 
 		<div class="card-body">
+
 			<div class="row mb-3">
-				<div class="col-3">
+				<div class="col-md-3 col-6 mb-3 mb-md-0">
 					<label><strong>Filtrar por</strong></label>
 					<select class="form-select">
-						<option value="" hidden></option>
+						<option value="" hidden>Elija una opci&oacute;n</option>
 						<option>Nombre Deudor</option>
 						<option>Concepto</option>
-						<option>Id Prestamo</option>
+						<option>Id Pr&eacutestamo</option>
 					</select>
 				</div>
-				<div class="col-6 offset-3">
+				<div class="col-md-5">
 					<label><strong>B&uacute;squeda</strong></label>
-				   <div class="input-group">
-						<input class="form-control" />
+					<div class="input-group">
+						<input class="form-control" placeholder="Buscar" />
 						<button class="btn btn-outline-primary" @onclick="(()=>Buscar())">Q</button>
 					</div>
 				</div>
 			</div>
 
-			<div class="table table-bordered">
-
-			</div>
-		</div>
-
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>PrestamoId</th>
-					<th>Concepto</th>
-					<th>Monto</th>
-					<th>Opciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var p in ListaPrestamos)
-				{
-					<tr>
-						<td>@p.PrestamoId</td>
-						<td>@p.Concepto</td>
-						<td>@p.Monto</td>
-						<td>
-							<button class="btn btn-outline-primary">*</button>
-							<button class="btn btn-outline-danger">-</button>
-						</td>
+			<table class="table">
+				<thead>
+					<tr class="border-bottom border-black">
+						<th scope="col">Id Pr&eacutestamo</th>
+						<th scope="col">Concepto</th>
+						<th scope="col">Monto</th>
+						<th scope="col">Opciones</th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach (var p in ListaPrestamos)
+					{
+						<tr>
+							<td>@p.PrestamoId</td>
+							<td>@p.Concepto</td>
+							<td>@p.Monto</td>
+							<td>
+								<button class="btn btn-outline-primary">*</button>
+								<button class="btn btn-outline-danger">-</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+		<div class="card-footer">
+			<label>Cantidad: @ListaPrestamos.Count()</label>
+			<label class="float-end">Total: @ListaPrestamos.Sum(prestamosService => prestamosService.Monto)</label>
+		</div>
 	</div>
 </div>
 
